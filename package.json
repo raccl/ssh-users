@@ -1,0 +1,38 @@
+{
+  "name": "@raccl/ssh-user",
+  "version": "v0.0.0",
+  "author": {
+    "name": "TaYaKi71751",
+    "url": "https://github.com/TaYaKi71751"
+  },
+  "bugs": {
+    "url": "https://github.com/raccl/ssh-user/issues"
+  },
+  "repository": {
+    "url": "https://github.com/raccl/ssh-user"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "dist": "tsc",
+    "lint:fix": "eslint --fix --ext .ts,.tsx .",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@corcc/loader": "github:corcc/loader#dist",
+    "@types/node": "^17.0.10",
+    "node": "^17.3.1",
+    "node-ssh": "^12.0.2",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0"
+  }
+}
