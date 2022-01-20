@@ -1,13 +1,20 @@
 import { loadModule } from '@corcc/loader';
 export type SSHConfig = {
 	host: string,
-	username: string,
-	user?: string,
-	groups?: string[],
-	privateKey: string,
-	publicKey?: string,
+	users?: {
+		[user: string]: {
+			privateKey: string,
+			publicKey?: string,
+			groups?: string[],
+		}
+	},
 }
 export function loadSSHConfig (path?: string): SSHConfig {
-	const sshConfig: SSHConfig = loadModule('SSHConfig');
+	const sshConfig: SSHConfig = loadModule(path ?? 'SSHConfig');
 	return sshConfig;
+}
+export function getSSHUserConfig (user: string, path?: string) {
+	const { users }: any = loadSSHConfig(path);
+	const userConfig: any = users[user];
+	return userConfig;
 }

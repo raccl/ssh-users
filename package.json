@@ -13,6 +13,7 @@
   },
   "main": "dist/index.js",
   "scripts": {
+    "test:useradd": "ts-node test/user/Add.ts",
     "tsc": "tsc",
     "dist": "tsc",
     "lint:fix": "eslint --fix --ext .ts,.tsx .",

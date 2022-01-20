@@ -1,23 +1,37 @@
 import fs from 'fs';
 import { NodeSSH } from 'node-ssh';
-import { User } from '../user/User';
-export async function addPublicKeyToSSH (ssh: NodeSSH, {
-	user,
-	publicKey
+import { loadSSHConfig } from '../ssh/config/SSH';
+import { runCommand } from '../ssh/exec/command';
+import { User } from '../user/Type';
+export async function setUserPublicKey (ssh: NodeSSH, {
+	user
 }: User) {
-	if (typeof publicKey == 'string' && publicKey) {
-		const mkdir: any = await ssh.execCommand(`sudo mkdir -p /home/${user}/.ssh || true `);
-		const sendFile = await ssh.execCommand(`echo '${publicKey}' | sudo tee /home/${user}/.ssh/authorized_keys`);
-		const chown: any = await ssh.execCommand(`sudo chown -R ${user}:${user} /home/${user}`);
+	const pubKey = getUserPublicKey(user);
+	if (typeof pubKey == 'string' && pubKey) {
+		const mkdir: any = await runCommand(ssh, {
+			command: `sudo mkdir -p /home/${user}/.ssh || true `
+		});
+		const write: any = await runCommand(ssh, {
+			command: `echo '${pubKey}' | sudo tee /home/${user}/.ssh/authorized_keys`
+		});
+		const chown: any = await runCommand(ssh, {
+			command: `sudo chown -R ${user}:${user} /home/${user}`
+		});
 		return {
 			mkdir,
-			chown,
-			sendFile
+			write,
+			chown
 		};
 	}
 }
-export function loadPublicKeyFromLocalPath (publicKeyPath: string) {
-	const publicKeyBuffer: Buffer = fs.readFileSync(publicKeyPath);
-	const publicKeyString: string = publicKeyBuffer.toString();
-	return publicKeyString;
+export function getUserPublicKey (user: string) {
+	const { users }: any = loadSSHConfig();
+	if (!users[user] || !user) {
+		throw Error(`Could not find ${user}`);
+	}
+	const _u = users[user];
+	const { publicKey } = _u;
+	const b: Buffer = fs.readFileSync(publicKey);
+	const s: string = b.toString();
+	return s;
 }
