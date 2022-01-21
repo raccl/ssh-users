@@ -1,14 +1,14 @@
 import { NodeSSH } from 'node-ssh';
 import { addGroups, addUserToGroups } from '../group';
 import { setUserPublicKey } from '../key/PublicKey';
-import { getSSHUserConfig } from '../ssh/config/SSH';
+import { getSSHUserConfig } from '../ssh/config';
 import { runCommand } from '../ssh/exec/command';
 import { User } from './Type';
 
 export async function addUser (ssh: NodeSSH, {
 	user,
 	groups
-}: User, path?:string) {
+}: User, path?: string) {
 	console.log('================================');
 	const _u = getSSHUserConfig(user);
 	const _g = (groups ?? _u.groups ?? []);

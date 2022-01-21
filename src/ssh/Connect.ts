@@ -1,5 +1,5 @@
 import { NodeSSH } from 'node-ssh';
-import { loadSSHConfig } from './config/SSH';
+import { loadSSHConfig } from './config';
 const ssh: NodeSSH = new NodeSSH();
 
 export async function connectSSHWith ({

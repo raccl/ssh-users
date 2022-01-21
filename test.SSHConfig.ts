@@ -1,31 +1,18 @@
-module.exports = {
-	host: 'instance',
-	users: {
-		ubuntu: {
-			privateKey: '/home/archlinux/.ssh/ubuntu_rsa',
-			publicKey: '/home/archlinux/.ssh/ubuntu_rsa.pub'
-		},
-		corcc: {
-			privateKey: '/home/archlinux/.ssh/corcc_rsa',
-			publicKey: '/home/archlinux/.ssh/corcc_rsa.pub',
-			groups: [
-				'chsh',
-				'pacman',
-				'npm',
-				'yarn',
-				'apt'
-			]
-		},
-		raccl: {
-			privateKey: '/home/archlinux/.ssh/raccl_rsa',
-			publicKey: '/home/archlinux/.ssh/raccl_rsa.pub',
-			groups: [
-				'chsh',
-				'pacman',
-				'npm',
-				'yarn',
-				'apt'
-			]
-		}
-	}
-};
+import { SSHConfig } from './src/ssh/config/';
+
+let config: any = {};
+config = new SSHConfig();
+config.host = 'raccl';
+config.users.addUser({
+	prefix: 'raccl',
+	user: 'ubuntu'
+});
+config.users.addUser({
+	prefix: 'raccl',
+	user: 'corcc'
+});
+config.users.addUser({
+	prefix: 'raccl',
+	user: 'raccl'
+});
+module.exports = config;

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { NodeSSH } from 'node-ssh';
-import { loadSSHConfig } from '../ssh/config/SSH';
+import { loadSSHConfig } from '../ssh/config';
 import { runCommand } from '../ssh/exec/command';
 import { User } from '../user/Type';
 export async function setUserPublicKey (ssh: NodeSSH, {
